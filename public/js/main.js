@@ -38,6 +38,13 @@ chatForm.addEventListener('submit', (e) => {
   e.preventDefault();
 
   const msg = e.target.elements.msg.value;
+  sendMessage(msg);
+
+  e.target.reset();
+  e.target.elements.msg.focus();
+})
+
+function sendMessage(msg){
   const chatbox = document.querySelector('.chat-messages.active');
 
   // check if the active chat is private
@@ -47,10 +54,7 @@ chatForm.addEventListener('submit', (e) => {
   }else {
     socket.emit('chatMessage', msg);
   }
-
-  e.target.reset();
-  e.target.elements.msg.focus();
-})
+}
 
 // Highlight username when clicked to show active chat
 function toggleUserHighlight(userElement){
