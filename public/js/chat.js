@@ -4,7 +4,6 @@ let privateChats = {};
 
 export function addNotification(username){
   const userElement = document.querySelector(`#${username}`);
-  debugger
   if (userElement){
     if (userElement.childElementCount === 0){
       const badge = document.createElement('span');
@@ -69,9 +68,6 @@ export function handlePrivateMessage({msg}){
 
 
 export function addPrivateMessage(chatbox, msg){
-  // const chatBox = document.querySelector('.chat-messages.active');
-  debugger
-  // if (!chatbox) return;
 
   const newDiv = document.createElement('div');
 
