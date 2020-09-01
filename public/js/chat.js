@@ -98,3 +98,16 @@ export function activateChat(username){
 
   newChat.classList.add('active');
 }
+
+// Highlight username when clicked to show active chat
+export function toggleUserHighlight(userElement){
+  // check if userElement is already active
+  if (userElement.classList.contains('active-user-chat')){
+    userElement.classList.remove('active-user-chat');
+    while (userElement.lastElementChild.tagName === 'SPAN'){
+      userElement.lastElementChild.remove();
+    }
+  }else {
+    userElement.classList.add('active-user-chat');
+  }
+}
