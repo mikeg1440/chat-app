@@ -2,14 +2,17 @@
 let privateChats = {};
 
 
-export function addNotification(username){
+export function addNotification(username, unreadMsgCount){
   const userElement = document.querySelector(`#${username}`);
   if (userElement){
     if (userElement.childElementCount === 0){
       const badge = document.createElement('span');
       badge.classList.add('badge');
-      badge.innerText = '!';
+      badge.innerText = unreadMsgCount;
       userElement.appendChild(badge);
+    }else {
+      const badge = userElement.firstElementChild;
+      badge.innerText = unreadMsgCount;
     }
   }
 }
@@ -26,9 +29,11 @@ export function createChatbox(username){
   privateChatBox.classList.add('chat-messages');
   privateChatBox.setAttribute('id', `privateChat-${username}`);
   document.querySelector('#chat-container').appendChild(privateChatBox);
-  privateChats[username] = privateChatBox;
+  privateChats[username] = {};
+  privateChats[username]['chat'] = privateChatBox;
+  privateChats[username]['unread'] = 0;
 
-  return privateChatBox;
+  return privateChats[username];
 }
 
 export function handleMessage(msg){
@@ -52,16 +57,19 @@ export function handlePrivateMessage({msg}){
   let chatroom;
   // check to see if chatroom exists already, if not create a new one
   if (privateChats.hasOwnProperty(msg.username)){
-    chatroom = privateChats[msg.username];
+    chatroom = privateChats[msg.username]['chat'];
   }else {
     chatroom = createChatbox(msg.username);
-    chatroom.classList.add('in-active');
+    chatroom.chat.classList.add('in-active');
   }
-  addPrivateMessage(chatroom, msg);
+  addPrivateMessage(chatroom.chat, msg);
 
   // add notification if chat is not active
-  if (!chatroom.classList.contains('active')){
-    addNotification(msg.username);
+  if (!chatroom.chat.classList.contains('active')){
+    chatroom.unread += 1;
+    debugger
+
+    addNotification(msg.username, chatroom.unread);
   }
 
 }
@@ -90,7 +98,7 @@ export function activateChat(username){
     newChat = document.querySelector(`#privateChat-${username}`);
     newChat.classList.remove('in-active');
   }else {
-    newChat = createChatbox(username);
+    newChat = createChatbox(username).chat;
   }
 
   currentChat.classList.remove('active');
