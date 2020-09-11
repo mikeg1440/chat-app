@@ -8,11 +8,17 @@ const app = express();
 const server = http.createServer(app);
 const io = socketio(server);
 
+const botName = 'Chatbot';
+
 // Setting static folder
 app.use(express.static(path.join(__dirname, 'public')));
 
 io.on('connection', socket => {
   console.log(`New WS Connection`);
+
+  // handle new user joining
+  socket.on('joinRoom', handleJoin)
+
   // Emit to single new connection
   socket.emit('message', formatMessage(botName, 'Welcome to Chat!'));
 
@@ -27,6 +33,12 @@ io.on('connection', socket => {
   socket.on('chatMessage', (msg) => {
     io.emit('message', formatMessage('Username', msg));
   })
+
+  function handleJoin(client){
+    console.log(client);
+    console.log(`${client.userName} joined ${client.room} room!`);
+  }
+
 })
 
 const PORT = process.env.PORT || 3000;
