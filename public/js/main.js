@@ -2,6 +2,7 @@
 const chatBox = document.getElementById('chatBox');
 const chatForm = document.getElementById('chatForm');
 const roomNameDisplay = document.getElementById('roomName');
+const disconnectBtn = document.getElementById('disconnectBtn');
 
 const socket = io();
 const { username, room } = Qs.parse(location.search, { ignoreQueryPrefix: true });
@@ -12,6 +13,10 @@ socket.emit('joinRoom', {username, room});
 roomNameDisplay.innerText = room;
 
 socket.on('message', handleMessage);
+
+disconnectBtn.addEventListener('click', (e) => {
+  socket.emit('disconnect', {username, room})
+})
 
 function handleMessage(msg){
   const div = document.createElement('div');
