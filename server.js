@@ -24,6 +24,9 @@ io.on('connection', socket => {
     io.emit('message', formatMessage(botName, 'User has left the chat'));
   });
 
+  socket.on('chatMessage', (msg) => {
+    io.emit('message', formatMessage('Username', msg));
+  })
 })
 
 const PORT = process.env.PORT || 3000;
