@@ -2,6 +2,7 @@
 const chatBox = document.getElementById('chatBox');
 const chatForm = document.getElementById('chatForm');
 const roomNameDisplay = document.getElementById('roomName');
+const userListDisplay = document.getElementById('users');
 const disconnectBtn = document.getElementById('disconnectBtn');
 
 const socket = io();
@@ -10,13 +11,25 @@ const { username, room } = Qs.parse(location.search, { ignoreQueryPrefix: true }
 // Join chatroom
 socket.emit('joinRoom', {username, room});
 
-roomNameDisplay.innerText = room;
-
 socket.on('message', handleMessage);
+socket.on('roomUsers', handleRoomUsers);
 
+// listen for when user clicks leave button
 disconnectBtn.addEventListener('click', (e) => {
   socket.emit('disconnect', {username, room})
 })
+
+function handleRoomUsers(chat){
+  // Update room name on page
+  roomNameDisplay.innerText = chat.room;
+
+  displayUsers(chat.users);
+}
+
+function displayUsers(users){
+  userListDisplay.innerHTML = `${users.map(user => `<li>${user.username}</li>`).join('')}`;
+}
+
 
 function handleMessage(msg){
   const div = document.createElement('div');
