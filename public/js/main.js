@@ -1,12 +1,15 @@
 
 const chatBox = document.getElementById('chatBox');
 const chatForm = document.getElementById('chatForm');
+const roomNameDisplay = document.getElementById('roomName');
 
 const socket = io();
 const { username, room } = Qs.parse(location.search, { ignoreQueryPrefix: true });
 
 // Join chatroom
 socket.emit('joinRoom', {username, room});
+
+roomNameDisplay.innerText = room;
 
 socket.on('message', handleMessage);
 
