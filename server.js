@@ -18,6 +18,12 @@ io.on('connection', socket => {
 
   // Emit to all connections on new user
   socket.broadcast.emit('message', formatMessage(botName, `User has joined the chat!`));
+
+  // Emit when user leaves
+  socket.on('disconnect', () => {
+    io.emit('message', formatMessage(botName, 'User has left the chat'));
+  });
+
 })
 
 const PORT = process.env.PORT || 3000;
