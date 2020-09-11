@@ -15,30 +15,33 @@ const botName = 'Chatbot';
 app.use(express.static(path.join(__dirname, 'public')));
 
 io.on('connection', socket => {
-  console.log(`New WS Connection`);
 
   // handle new user joining
-  socket.on('joinRoom', handleJoin)
+  // socket.on('joinRoom', handleJoin)
+  socket.on('joinRoom', ({username, room}) => {
+    const user = userJoin(socket.id, username, room);
 
-  // Emit to single new connection
-  socket.emit('message', formatMessage(botName, 'Welcome to Chat!'));
+    socket.join(user.room);
+    console.log(`${username} joined ${room} room with ID: ${user.id}!`);
 
-  // Emit to all connections on new user
-  socket.broadcast.emit('message', formatMessage(botName, `User has joined the chat!`));
+    // Emit welcome message to single new connection
+    socket.emit('message', formatMessage(botName, `Welcome to Chat ${user.username}!`));
 
-  // Emit when user leaves
-  socket.on('disconnect', () => {
-    io.emit('message', formatMessage(botName, 'User has left the chat'));
+    // Emit to all connections on new user
+    socket.broadcast.to(user.room).emit('message', formatMessage(user.username, `${user.username} has joined the chat!`));
+
+    // Emit when user leaves
+    socket.on('disconnect', () => {
+      io.emit('message', formatMessage(botName, `${user.username} has left the chat`));
+    });
+
   });
 
+  // Handle when user sends a new chat message
   socket.on('chatMessage', (msg) => {
-    io.emit('message', formatMessage('Username', msg));
+    const user = getCurrentUser(socket.id);
+    io.to(user.room).emit('message', formatMessage(user.username, msg));
   })
-
-  function handleJoin(client){
-    console.log(client);
-    console.log(`${client.userName} joined ${client.room} room!`);
-  }
 
 })
 
