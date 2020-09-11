@@ -16,8 +16,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 io.on('connection', socket => {
 
-  // handle new user joining
-  // socket.on('joinRoom', handleJoin)
+  // handle new user joining a room
   socket.on('joinRoom', ({username, room}) => {
     const user = userJoin(socket.id, username, room);
 
@@ -30,12 +29,16 @@ io.on('connection', socket => {
     // Emit to all connections on new user
     socket.broadcast.to(user.room).emit('message', formatMessage(user.username, `${user.username} has joined the chat!`));
 
+    // Emit users and room info
+    io.to(user.room).emit('roomUsers', {room: user.room, users: getRoomUsers(user.room)});
+
     // Emit when user leaves
     socket.on('disconnect', () => {
       const user = userDisconnect(socket.id);
 
       if (user){
         io.to(user.room).emit('message', formatMessage(botName, `${user.username} has left the chat`));
+        io.to(user.room).emit('roomUsers', {room: user.room, users: getRoomUsers(user.room)});
       }
     });
 
