@@ -13,6 +13,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 io.on('connection', socket => {
   console.log(`New WS Connection`);
+  // Emit to single new connection
+  socket.emit('message', formatMessage(botName, 'Welcome to Chat!'));
 })
 
 const PORT = process.env.PORT || 3000;
