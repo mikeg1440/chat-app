@@ -14,3 +14,15 @@ function handleMessage(msg){
   chatBox.appendChild(div);
   chatBox.scrollTop = chatBox.scrollHeight;
 }
+
+// When user sends a chat message
+chatForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+
+  const msg = e.target.elements.msg.value;
+
+  socket.emit('chatMessage', msg);
+
+  e.target.reset();
+  e.target.elements.msg.focus();
+})
