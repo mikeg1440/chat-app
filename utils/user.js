@@ -5,7 +5,8 @@ module.exports = {
   userJoin,
   getCurrentUser,
   userDisconnect,
-  getRoomUsers
+  getRoomUsers,
+  getUser
 }
 
 function userJoin(id, username, room){
@@ -32,4 +33,8 @@ function userDisconnect(id){
 
 function getRoomUsers(room){
   return users.filter(user => user.room === room);
+}
+
+function getUser(userObject){
+  return users.find(user => user.username === userObject.user);
 }
