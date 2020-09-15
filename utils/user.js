@@ -9,6 +9,10 @@ module.exports = {
 }
 
 function userJoin(id, username, room){
+  let currentUser = getCurrentUser(id);
+  if (currentUser) return currentUser;
+
+
   const user = {id, username, room};
 
   users.push(user);
