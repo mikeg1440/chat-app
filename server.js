@@ -40,15 +40,15 @@ io.on('connection', socket => {
       }
     });
 
+
+    // Handle when user sends a new chat message
+    socket.on('chatMessage', (msg) => {
+      const user = getCurrentUser(socket.id);
+      if (user) io.to(user.room).emit('message', formatMessage(user.username, msg));
+    });
+
   });
-
-  // Handle when user sends a new chat message
-  socket.on('chatMessage', (msg) => {
-    const user = getCurrentUser(socket.id);
-    io.to(user.room).emit('message', formatMessage(user.username, msg));
-  })
-
-})
+});
 
 const PORT = process.env.PORT || 3000;
 
