@@ -19,9 +19,7 @@ io.on('connection', socket => {
   // handle new user joining a room
   socket.on('joinRoom', ({username, room}) => {
     const user = userJoin(socket.id, username, room);
-
     socket.join(user.room);
-    console.log(`${username} joined ${room} room with ID: ${user.id}!`);
 
     // Emit welcome message to single new connection
     socket.emit('message', formatMessage(botName, `Welcome to Chat ${user.username}!`));
@@ -30,7 +28,7 @@ io.on('connection', socket => {
     socket.broadcast.to(user.room).emit('message', formatMessage(user.username, `${user.username} has joined the chat!`));
 
     // Emit users and room info
-    io.to(user.room).emit('roomUsers', {room: user.room, users: getRoomUsers(user.room)});
+    io.to(user.room).emit('roomUsers', {room: user.room, users: getRoomUsers(user.room), userId: user.id});
 
     // Emit when user leaves
     socket.on('disconnect', () => {
