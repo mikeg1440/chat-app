@@ -8,11 +8,11 @@ const disconnectBtn = document.getElementById('disconnectBtn');
 const socket = io();
 const { username, room } = Qs.parse(location.search, { ignoreQueryPrefix: true });
 
-// Join chatroom
-socket.emit('joinRoom', {username, room});
-
 socket.on('message', handleMessage);
 socket.on('roomUsers', handleRoomUsers);
+
+// Join chatroom
+socket.emit('joinRoom', {username, room});
 
 // listen for when user clicks leave button
 disconnectBtn.addEventListener('click', (e) => {
@@ -20,6 +20,7 @@ disconnectBtn.addEventListener('click', (e) => {
 })
 
 function handleRoomUsers(chat){
+
   // Update room name on page
   roomNameDisplay.innerText = chat.room;
 

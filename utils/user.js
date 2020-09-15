@@ -12,7 +12,6 @@ function userJoin(id, username, room){
   let currentUser = getCurrentUser(id);
   if (currentUser) return currentUser;
 
-
   const user = {id, username, room};
 
   users.push(user);
@@ -28,7 +27,6 @@ function userDisconnect(id){
   const index = users.findIndex( user => user.id === id);
   if (index !== -1){
     return users.splice(index, 1);
-    // return users[index];
   }
 }
 
