@@ -41,13 +41,16 @@ function displayUsers(users){
 function handleMessage(msg){
   const chatBox = document.querySelector('.chat-messages.active');
   if (!chatBox) return;
-  const div = document.createElement('div');
-  div.classList.add('message');
-  div.innerHTML = `<p class="meta">${msg.username} <span>${msg.time}</span></p>
+
+  const newDiv = document.createElement('div');
+
+  newDiv.classList.add('message');
+  newDiv.innerHTML = `<p class="meta">${msg.username} <span>${msg.time}</span></p>
   <p class="text">
     ${msg.text}
   </p>`
-  chatBox.appendChild(div);
+
+  chatBox.appendChild(newDiv);
   chatBox.scrollTop = chatBox.scrollHeight;
 }
 
