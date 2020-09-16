@@ -20,3 +20,15 @@ export function removeNotification(username){
     userElement.firstElementChild.remove();
   }
 }
+
+export function createChatbox(username){
+  let privateChatBox = document.createElement('div');
+  privateChatBox.classList.add('chat-messages');
+
+  privateChatBox.setAttribute('id', `privateChat-${username}`);
+
+  document.querySelector('#chat-container').appendChild(privateChatBox);
+  privateChats[username] = privateChatBox;
+
+  return privateChatBox;
+}
