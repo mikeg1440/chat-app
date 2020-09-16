@@ -3,7 +3,7 @@ const http = require('http');
 const express = require('express');
 const socketio = require('socket.io');
 const formatMessage = require('./utils/message');
-const {userJoin, getCurrentUser, userDisconnect, getRoomUsers} = require('./utils/user');
+const {userJoin, getCurrentUser, userDisconnect, getRoomUsers, getUser} = require('./utils/user');
 
 const app = express();
 const server = http.createServer(app);
@@ -45,6 +45,12 @@ io.on('connection', socket => {
     socket.on('chatMessage', (msg) => {
       const user = getCurrentUser(socket.id);
       if (user) io.to(user.room).emit('message', formatMessage(user.username, msg));
+    });
+
+    socket.on('privateMessage', (receivingUsername, msg) => {
+      let receivingUser = getUser(receivingUsername);
+      console.log(`receivingUser: ${JSON.stringify(receivingUser)}`)
+      socket.broadcast.to(receivingUser.id).emit('privateMessage', {username: user.username, msg: msg});
     });
 
   });
