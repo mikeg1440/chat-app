@@ -25,8 +25,18 @@ function handlePrivateMessage({username, msg}){
   alert(`User ${username} sent a message`);
 }
 
-function handleRoomUsers(chat){
+function createChatbox(username){
+  let privateChatBox = document.createElement('div');
+  privateChatBox.classList.add('chat-messages');
+  privateChatBox.classList.add('active');
+  privateChatBox.setAttribute('id', `privateChat-${username}`);
+  chatBox.style.display = 'none';
+  chatBox.classList.remove('active');
+  document.querySelector('#chat-container').appendChild(privateChatBox);
+  privateChats[username] = chatBox;
+}
 
+function handleRoomUsers(chat){
   // Update room name on page
   roomNameDisplay.innerText = chat.room;
 
