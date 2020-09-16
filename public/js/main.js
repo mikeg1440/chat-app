@@ -39,6 +39,8 @@ function displayUsers(users){
 
 
 function handleMessage(msg){
+  const chatBox = document.querySelector('.chat-messages.active');
+  if (!chatBox) return;
   const div = document.createElement('div');
   div.classList.add('message');
   div.innerHTML = `<p class="meta">${msg.username} <span>${msg.time}</span></p>
