@@ -33,7 +33,7 @@ function handleRoomUsers(chat){
 }
 
 function displayUsers(users){
-  userListDisplay.innerHTML = `${users.map(user => `<li>${user.username}</li>`).join('')}`;
+  userListDisplay.innerHTML = `${users.map(user => `<li class='user-btn' id=${user}>${user.username}</li>`).join('')}`;
 }
 
 
@@ -59,3 +59,10 @@ chatForm.addEventListener('submit', (e) => {
   e.target.reset();
   e.target.elements.msg.focus();
 })
+
+// When user clicks on a username from the user list
+userListDisplay.addEventListener('click', (e) => {
+  const user = e.target.innerHTML;
+  alert(`Sending msg to ${user}`)
+  socket.emit('privateMessage', {user, msg: 'Test message'});
+});
