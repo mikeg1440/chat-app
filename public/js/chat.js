@@ -1,3 +1,5 @@
+
+
 export function addNotification(username){
   const userElement = document.querySelector(`#${username}`);
   debugger
@@ -8,5 +10,13 @@ export function addNotification(username){
       badge.innerText = '!';
       userElement.appendChild(badge);
     }
+  }
+}
+
+export function removeNotification(username){
+  debugger;
+  const userElement = document.querySelector(`#${username}`);
+  if (userElement && userElement.childElementCount === 1){
+    userElement.firstElementChild.remove();
   }
 }
