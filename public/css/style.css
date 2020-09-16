@@ -39,6 +39,10 @@ a {
 	text-decoration: none;
 }
 
+.active {
+	display: block;
+}
+
 .btn {
 	cursor: pointer;
 	padding: 5px 15px;
