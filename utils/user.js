@@ -35,6 +35,6 @@ function getRoomUsers(room){
   return users.filter(user => user.room === room);
 }
 
-function getUser(userObject){
-  return users.find(user => user.username === userObject.user);
+function getUser(username){
+  return users.find(user => user.username === username);
 }
