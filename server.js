@@ -47,10 +47,15 @@ io.on('connection', socket => {
       if (user) io.to(user.room).emit('message', formatMessage(user.username, msg));
     });
 
-    socket.on('privateMessage', (receivingUsername, msg) => {
-      let receivingUser = getUser(receivingUsername);
+    socket.on('privateMessage', ({username, msg}) => {
+      let receivingUser = getUser(username);
       console.log(`receivingUser: ${JSON.stringify(receivingUser)}`)
-      socket.broadcast.to(receivingUser.id).emit('privateMessage', {username: user.username, msg: msg});
+      if (receivingUser){
+        socket.broadcast.to(receivingUser.id).emit('privateMessage', {msg: formatMessage(getCurrentUser(socket.id).username, msg)});
+        socket.emit('message', formatMessage(getCurrentUser(socket.id).username, msg));
+      }else {
+        socket.emit('message', formatMessage(botName, `Failed to send message`));
+      }
     });
 
   });
