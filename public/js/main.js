@@ -42,15 +42,22 @@ function removeNotification(username){
 }
 
 function handlePrivateMessage({msg}){
+  let chatroom;
+  // check to see if chatroom exists already, if not create a new one
   if (privateChats.hasOwnProperty(msg.username)){
-    let chatroom = privateChats[msg.username]
-    if (chatroom.style.display === 'none'){
-      chatroom.style.display = 'block';
-    }
+    chatroom = privateChats[msg.username];
+    addPrivateMessage(chatroom, msg);
   }else {
-    createChatbox(msg.username);
+    chatroom = createChatbox(msg.username);
+    chatroom.classList.add('in-active');
+    addPrivateMessage(chatroom, msg);
   }
-  handleMessage(msg);
+
+  // add notification if chat is not active
+  if (!chatroom.classList.contains('active')){
+    addNotification(msg.username);
+  }
+
 }
 
 function createChatbox(username){
