@@ -10,6 +10,7 @@ const { username, room } = Qs.parse(location.search, { ignoreQueryPrefix: true }
 
 socket.on('message', handleMessage);
 socket.on('roomUsers', handleRoomUsers);
+socket.on('privateMessage', handlePrivateMessage);
 
 // Join chatroom
 socket.emit('joinRoom', {username, room});
@@ -18,6 +19,10 @@ socket.emit('joinRoom', {username, room});
 disconnectBtn.addEventListener('click', (e) => {
   socket.emit('disconnect', {username, room})
 })
+
+function handlePrivateMessage({username, msg}){
+  alert(`User ${username} sent a message`);
+}
 
 function handleRoomUsers(chat){
 
