@@ -52,7 +52,8 @@ io.on('connection', socket => {
       console.log(`receivingUser: ${JSON.stringify(receivingUser)}`)
       if (receivingUser){
         socket.broadcast.to(receivingUser.id).emit('privateMessage', {msg: formatMessage(getCurrentUser(socket.id).username, msg)});
-        socket.emit('message', formatMessage(getCurrentUser(socket.id).username, msg));
+        const formattedMsg = formatMessage(getCurrentUser(socket.id).username, msg);
+        socket.emit('message', formattedMsg);
       }else {
         socket.emit('message', formatMessage(botName, `Failed to send message`));
       }
