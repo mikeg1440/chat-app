@@ -76,8 +76,15 @@ chatForm.addEventListener('submit', (e) => {
   e.preventDefault();
 
   const msg = e.target.elements.msg.value;
+  const chatbox = document.querySelector('.chat-messages.active');
 
-  socket.emit('chatMessage', msg);
+  // check if the active chat is private
+  if (chatbox.getAttribute('id').match(/privateChat/)){
+    let username = chatbox.getAttribute('id').match(/privateChat-([\w]+)/)[1]
+    socket.emit('privateMessage', {username, msg});
+  }else {
+    socket.emit('chatMessage', msg);
+  }
 
   e.target.reset();
   e.target.elements.msg.focus();
@@ -85,7 +92,12 @@ chatForm.addEventListener('submit', (e) => {
 
 // When user clicks on a username from the user list
 userListDisplay.addEventListener('click', (e) => {
-  const user = e.target.innerHTML;
-  alert(`Sending msg to ${user}`)
-  socket.emit('privateMessage', {user, msg: 'Test message'});
+  const username = e.target.innerHTML;
+  if (privateChats.hasOwnProperty(username)){
+    const privateChat = document.querySelector(`#privateChat-${username}`);
+    privateChat.style.display = 'block';
+    chatBox.style.display = 'none';
+  }else {
+    createChatbox(username);
+  }
 });
