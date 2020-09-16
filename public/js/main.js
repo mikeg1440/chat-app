@@ -1,5 +1,4 @@
 
-const chatBox = document.getElementById('chatBox');
 const chatForm = document.getElementById('chatForm');
 const roomNameDisplay = document.getElementById('roomName');
 const userListDisplay = document.getElementById('users');
@@ -21,8 +20,16 @@ disconnectBtn.addEventListener('click', (e) => {
   socket.emit('disconnect', {username, room})
 })
 
-function handlePrivateMessage({username, msg}){
-  alert(`User ${username} sent a message`);
+function handlePrivateMessage({msg}){
+  if (privateChats.hasOwnProperty(msg.username)){
+    let chatroom = privateChats[msg.username]
+    if (chatroom.style.display === 'none'){
+      chatroom.style.display = 'block';
+    }
+  }else {
+    createChatbox(msg.username);
+  }
+  handleMessage(msg);
 }
 
 function createChatbox(username){
