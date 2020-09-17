@@ -32,3 +32,19 @@ export function createChatbox(username){
 
   return privateChatBox;
 }
+
+export function handleMessage(msg){
+  const chatBox = document.querySelector('.chat-messages.active');
+  if (!chatBox) return;
+
+  const newDiv = document.createElement('div');
+  debugger
+  newDiv.classList.add('message');
+  newDiv.innerHTML = `<p class="meta">${msg.username} <span>${msg.time}</span></p>
+  <p class="text">
+    ${msg.text}
+  </p>`
+
+  chatBox.appendChild(newDiv);
+  chatBox.scrollTop = chatBox.scrollHeight;
+}
