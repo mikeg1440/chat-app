@@ -1,4 +1,4 @@
-import { addNotification, removeNotification, createChatbox, handleMessage } from './chat.js'
+import { addNotification, removeNotification, createChatbox, handleMessage, handlePrivateMessage, addPrivateMessage, activateChat } from './chat.js'
 
 const chatForm = document.getElementById('chatForm');
 const roomNameDisplay = document.getElementById('roomName');
@@ -6,7 +6,7 @@ const userListDisplay = document.getElementById('users');
 const disconnectBtn = document.getElementById('disconnectBtn');
 
 const socket = io();
-const { username, room } = Qs.parse(location.search, { ignoreQueryPrefix: true });
+const { username, room } = Qs.parse(location.search, { ignoreQueryPrefix: true });    // grab the username and room from the URL query parameters
 
 socket.on('message', handleMessage);
 socket.on('roomUsers', handleRoomUsers);
@@ -64,6 +64,7 @@ function toggleUserHighlight(userElement){
     userElement.classList.add('active-user-chat');
   }
 }
+
 
 // When user clicks on a username from the user list
 userListDisplay.addEventListener('click', (e) => {
