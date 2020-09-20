@@ -1,4 +1,6 @@
 
+let privateChats = {};
+
 
 export function addNotification(username){
   const userElement = document.querySelector(`#${username}`);

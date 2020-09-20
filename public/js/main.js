@@ -4,7 +4,6 @@ const chatForm = document.getElementById('chatForm');
 const roomNameDisplay = document.getElementById('roomName');
 const userListDisplay = document.getElementById('users');
 const disconnectBtn = document.getElementById('disconnectBtn');
-let privateChats = {};
 
 const socket = io();
 const { username, room } = Qs.parse(location.search, { ignoreQueryPrefix: true });
