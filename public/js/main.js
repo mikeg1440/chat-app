@@ -1,3 +1,4 @@
+import { addNotification, removeNotification, createChatbox, handleMessage } from './chat.js'
 
 const chatForm = document.getElementById('chatForm');
 const roomNameDisplay = document.getElementById('roomName');
@@ -20,27 +21,6 @@ disconnectBtn.addEventListener('click', (e) => {
   socket.emit('disconnect', {username, room})
 })
 
-function addNotification(username){
-  const userElement = document.querySelector(`#${username}`);
-  debugger
-  if (userElement){
-    if (userElement.childElementCount === 0){
-      let badge = document.createElement('span');
-      badge.classList.add('badge');
-      badge.innerText = '!';
-      userElement.appendChild(badge);
-    }
-  }
-}
-
-function removeNotification(username){
-  debugger;
-  const userElement = document.querySelector(`#${username}`);
-  if (userElement && userElement.childElementCount === 1){
-    userElement.firstElementChild.remove();
-  }
-}
-
 function handlePrivateMessage({msg}){
   let chatroom;
   // check to see if chatroom exists already, if not create a new one
@@ -60,17 +40,6 @@ function handlePrivateMessage({msg}){
 
 }
 
-function createChatbox(username){
-  let privateChatBox = document.createElement('div');
-  privateChatBox.classList.add('chat-messages');
-
-  privateChatBox.setAttribute('id', `privateChat-${username}`);
-
-  document.querySelector('#chat-container').appendChild(privateChatBox);
-  privateChats[username] = privateChatBox;
-
-  return privateChatBox;
-}
 
 function handleRoomUsers(chat){
   // Update room name on page
@@ -98,21 +67,6 @@ function addPrivateMessage(chatbox, msg){
 
   chatbox.appendChild(newDiv);
   chatbox.scrollTop = chatbox.scrollHeight;
-}
-
-function handleMessage(msg){
-  const chatBox = document.querySelector('.chat-messages.active');
-  if (!chatBox) return;
-
-  const newDiv = document.createElement('div');
-  newDiv.classList.add('message');
-  newDiv.innerHTML = `<p class="meta">${msg.username} <span>${msg.time}</span></p>
-  <p class="text">
-    ${msg.text}
-  </p>`
-
-  chatBox.appendChild(newDiv);
-  chatBox.scrollTop = chatBox.scrollHeight;
 }
 
 // When user sends a chat message
