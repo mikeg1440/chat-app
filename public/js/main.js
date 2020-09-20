@@ -34,22 +34,6 @@ function displayUsers(users){
 }
 
 
-function addPrivateMessage(chatbox, msg){
-  // const chatBox = document.querySelector('.chat-messages.active');
-  if (!chatbox) return;
-
-  const newDiv = document.createElement('div');
-
-  newDiv.classList.add('message');
-  newDiv.innerHTML = `<p class="meta">${msg.username} <span>${msg.time}</span></p>
-  <p class="text">
-    ${msg.text}
-  </p>`
-
-  chatbox.appendChild(newDiv);
-  chatbox.scrollTop = chatbox.scrollHeight;
-}
-
 // When user sends a chat message
 chatForm.addEventListener('submit', (e) => {
   e.preventDefault();
