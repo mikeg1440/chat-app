@@ -43,6 +43,12 @@ a {
 	display: block;
 }
 
+.active-user-chat {
+	background-color: #00a1ff;
+	text-align: center;
+	border-radius: 10px;
+	width: 40%;
+}
 .btn {
 	cursor: pointer;
 	padding: 5px 15px;
