@@ -43,6 +43,10 @@ a {
 	display: block;
 }
 
+.in-active {
+	display: none;
+}
+
 .active-user-chat {
 	background-color: #00a1ff;
 	text-align: center;
