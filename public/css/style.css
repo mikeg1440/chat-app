@@ -53,6 +53,15 @@ a {
 	border-radius: 10px;
 	width: 40%;
 }
+
+.badge {
+	padding: 1px 7px;
+	background-color: #00ff08;
+	border-radius: 50%;
+	color: var(--light-color-b);
+	margin-left: .5rem;
+}
+
 .btn {
 	cursor: pointer;
 	padding: 5px 15px;
