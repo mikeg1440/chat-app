@@ -20,6 +20,19 @@ disconnectBtn.addEventListener('click', (e) => {
   socket.emit('disconnect', {username, room})
 })
 
+function addNotification(username){
+  const userElement = document.querySelector(`#${username}`);
+  debugger
+  if (userElement){
+    if (userElement.childElementCount === 0){
+      let badge = document.createElement('span');
+      badge.classList.add('badge');
+      badge.innerText = '!';
+      userElement.appendChild(badge);
+    }
+  }
+}
+
 function handlePrivateMessage({msg}){
   if (privateChats.hasOwnProperty(msg.username)){
     let chatroom = privateChats[msg.username]
