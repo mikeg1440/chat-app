@@ -33,6 +33,14 @@ function addNotification(username){
   }
 }
 
+function removeNotification(username){
+  debugger;
+  const userElement = document.querySelector(`#${username}`);
+  if (userElement && userElement.childElementCount === 1){
+    userElement.firstElementChild.remove();
+  }
+}
+
 function handlePrivateMessage({msg}){
   if (privateChats.hasOwnProperty(msg.username)){
     let chatroom = privateChats[msg.username]
