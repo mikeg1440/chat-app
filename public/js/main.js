@@ -72,7 +72,7 @@ function handleRoomUsers(chat){
 }
 
 function displayUsers(users){
-  userListDisplay.innerHTML = `${users.map(user => `<li class='user-btn' id=${user}>${user.username}</li>`).join('')}`;
+  userListDisplay.innerHTML = `${users.map(user => `<li class='user-btn' id=${user.username}>${user.username}</li>`).join('')}`;
 }
 
 
