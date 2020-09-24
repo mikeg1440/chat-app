@@ -111,6 +111,19 @@ chatForm.addEventListener('submit', (e) => {
   e.target.elements.msg.focus();
 })
 
+// Highlight username when clicked to show active chat
+function toggleUserHighlight(userElement){
+  // check if userElement is already active
+  if (userElement.classList.contains('active-user-chat')){
+    userElement.classList.remove('active-user-chat');
+    while (userElement.lastElementChild.tagName === 'SPAN'){
+      userElement.lastElementChild.remove();
+    }
+  }else {
+    userElement.classList.add('active-user-chat');
+  }
+}
+
 // When user clicks on a username from the user list
 userListDisplay.addEventListener('click', (e) => {
   const username = e.target.innerHTML;
