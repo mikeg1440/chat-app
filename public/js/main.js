@@ -129,9 +129,21 @@ userListDisplay.addEventListener('click', (e) => {
   const username = e.target.innerHTML;
   if (privateChats.hasOwnProperty(username)){
     const privateChat = document.querySelector(`#privateChat-${username}`);
-    privateChat.style.display = 'block';
-    chatBox.style.display = 'none';
+    let currentChat = document.querySelector('.chat-messages.active');
+
+    currentChat.classList.remove('active');
+    currentChat.classList.add('in-active');
+    privateChat.classList.remove('in-active');
+    privateChat.classList.add('active');
+
+    privateChat.classList.add('active');
+
   }else {
-    createChatbox(username);
+
+    let newChat = createChatbox(username);
+
+    chatBox.classList.remove('active');
+    chatBox.classList.add('in-active');
+    newChat.classList.add('active');
   }
 });
