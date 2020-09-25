@@ -126,7 +126,15 @@ function toggleUserHighlight(userElement){
 
 // When user clicks on a username from the user list
 userListDisplay.addEventListener('click', (e) => {
-  const username = e.target.innerHTML;
+  let username = e.target.innerText;
+
+  // filter out non-alpha chars
+  username = username.match(/[\w]+/)[0];
+
+  toggleUserHighlight(e.target);
+
+  removeNotification(username);
+
   if (privateChats.hasOwnProperty(username)){
     const privateChat = document.querySelector(`#privateChat-${username}`);
     let currentChat = document.querySelector('.chat-messages.active');
