@@ -56,12 +56,13 @@ function handlePrivateMessage({msg}){
 function createChatbox(username){
   let privateChatBox = document.createElement('div');
   privateChatBox.classList.add('chat-messages');
-  privateChatBox.classList.add('active');
+
   privateChatBox.setAttribute('id', `privateChat-${username}`);
-  chatBox.style.display = 'none';
-  chatBox.classList.remove('active');
+
   document.querySelector('#chat-container').appendChild(privateChatBox);
-  privateChats[username] = chatBox;
+  privateChats[username] = privateChatBox;
+
+  return privateChatBox;
 }
 
 function handleRoomUsers(chat){
