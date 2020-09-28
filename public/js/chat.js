@@ -7,7 +7,7 @@ export function addNotification(username){
   debugger
   if (userElement){
     if (userElement.childElementCount === 0){
-      let badge = document.createElement('span');
+      const badge = document.createElement('span');
       badge.classList.add('badge');
       badge.innerText = '!';
       userElement.appendChild(badge);
@@ -16,7 +16,6 @@ export function addNotification(username){
 }
 
 export function removeNotification(username){
-  debugger;
   const userElement = document.querySelector(`#${username}`);
   if (userElement && userElement.childElementCount === 1){
     userElement.firstElementChild.remove();
@@ -24,11 +23,9 @@ export function removeNotification(username){
 }
 
 export function createChatbox(username){
-  let privateChatBox = document.createElement('div');
+  const privateChatBox = document.createElement('div');
   privateChatBox.classList.add('chat-messages');
-
   privateChatBox.setAttribute('id', `privateChat-${username}`);
-
   document.querySelector('#chat-container').appendChild(privateChatBox);
   privateChats[username] = privateChatBox;
 
@@ -40,7 +37,7 @@ export function handleMessage(msg){
   if (!chatBox) return;
 
   const newDiv = document.createElement('div');
-  debugger
+
   newDiv.classList.add('message');
   newDiv.innerHTML = `<p class="meta">${msg.username} <span>${msg.time}</span></p>
   <p class="text">
