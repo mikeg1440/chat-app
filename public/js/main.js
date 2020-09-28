@@ -21,25 +21,6 @@ disconnectBtn.addEventListener('click', (e) => {
   socket.emit('disconnect', {username, room})
 })
 
-function handlePrivateMessage({msg}){
-  let chatroom;
-  // check to see if chatroom exists already, if not create a new one
-  if (privateChats.hasOwnProperty(msg.username)){
-    chatroom = privateChats[msg.username];
-    addPrivateMessage(chatroom, msg);
-  }else {
-    chatroom = createChatbox(msg.username);
-    chatroom.classList.add('in-active');
-    addPrivateMessage(chatroom, msg);
-  }
-
-  // add notification if chat is not active
-  if (!chatroom.classList.contains('active')){
-    addNotification(msg.username);
-  }
-
-}
-
 
 function handleRoomUsers(chat){
   // Update room name on page
