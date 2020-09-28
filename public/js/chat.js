@@ -87,24 +87,18 @@ export function addPrivateMessage(chatbox, msg){
 
 
 export function activateChat(username){
+  const currentChat = document.querySelector('.chat-messages.active');
+  let newChat;
+
   if (privateChats.hasOwnProperty(username)){
-    const privateChat = document.querySelector(`#privateChat-${username}`);
-    let currentChat = document.querySelector('.chat-messages.active');
-
-    currentChat.classList.remove('active');
-    currentChat.classList.add('in-active');
-    privateChat.classList.remove('in-active');
-    privateChat.classList.add('active');
-
-    privateChat.classList.add('active');
-
+    newChat = document.querySelector(`#privateChat-${username}`);
+    newChat.classList.remove('in-active');
   }else {
-
-    let newChat = createChatbox(username);
-
-    chatBox.classList.remove('active');
-    chatBox.classList.add('in-active');
-    newChat.classList.add('active');
+    newChat = createChatbox(username);
   }
 
+  currentChat.classList.remove('active');
+  currentChat.classList.add('in-active');
+
+  newChat.classList.add('active');
 }
