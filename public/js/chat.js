@@ -54,12 +54,11 @@ export function handlePrivateMessage({msg}){
   // check to see if chatroom exists already, if not create a new one
   if (privateChats.hasOwnProperty(msg.username)){
     chatroom = privateChats[msg.username];
-    addPrivateMessage(chatroom, msg);
   }else {
     chatroom = createChatbox(msg.username);
     chatroom.classList.add('in-active');
-    addPrivateMessage(chatroom, msg);
   }
+  addPrivateMessage(chatroom, msg);
 
   // add notification if chat is not active
   if (!chatroom.classList.contains('active')){
