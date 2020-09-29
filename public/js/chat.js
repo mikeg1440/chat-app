@@ -57,7 +57,7 @@ export function handlePrivateMessage({msg}){
   let chatroom;
   // check to see if chatroom exists already, if not create a new one
   if (privateChats.hasOwnProperty(msg.username)){
-    chatroom = privateChats[msg.username]['chat'];
+    chatroom = privateChats[msg.username];
   }else {
     chatroom = createChatbox(msg.username);
     chatroom.chat.classList.add('in-active');
