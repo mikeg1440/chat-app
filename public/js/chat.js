@@ -27,7 +27,7 @@ export function removeNotification(username){
 export function createChatbox(username){
   const privateChatBox = document.createElement('div');
   privateChatBox.classList.add('chat-messages');
-  privateChatBox.setAttribute('id', `privateChat-${username}`);
+  privateChatBox.setAttribute('id', `${username}-chatBox`);
   document.querySelector('#chat-container').appendChild(privateChatBox);
   privateChats[username] = {};
   privateChats[username]['chat'] = privateChatBox;
@@ -93,9 +93,9 @@ export function addPrivateMessage(chatbox, msg){
 export function activateChat(username){
   const currentChat = document.querySelector('.chat-messages.active');
   let newChat;
-
-  if (privateChats.hasOwnProperty(username)){
-    newChat = document.querySelector(`#privateChat-${username}`);
+  newChat = document.querySelector(`#${username}-chatBox`);
+  debugger
+  if (newChat){
     newChat.classList.remove('in-active');
   }else {
     newChat = createChatbox(username).chat;
