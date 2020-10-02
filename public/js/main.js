@@ -1,6 +1,6 @@
 import {
   addNotification,
-  removeNotification, 
+  removeNotification,
   createChatbox,
   handleMessage,
   handlePrivateMessage,
@@ -56,11 +56,11 @@ function sendMessage(msg){
   const chatbox = document.querySelector('.chat-messages.active');
 
   // check if the active chat is private
-  if (chatbox.getAttribute('id').match(/privateChat/)){
-    let username = chatbox.getAttribute('id').match(/privateChat-([\w]+)/)[1]
-    socket.emit('privateMessage', {username, msg});
-  }else {
+  if (chatbox.getAttribute('id').match(/room/)){
     socket.emit('chatMessage', msg);
+  }else {
+    let username = chatbox.getAttribute('id').match(/([\w]+)-chatBox/)[1]
+    socket.emit('privateMessage', {username, msg});
   }
 }
 
@@ -70,11 +70,16 @@ userListDisplay.addEventListener('click', (e) => {
   let username = e.target.innerText;
 
   // filter out non-alpha chars
-  username = username.match(/[\w]+/)[0];
-
+  username = username.match(/[^0-9]+/)[0];
+  debugger
   toggleUserHighlight(e.target);
 
   removeNotification(username);
 
   activateChat(username);
 });
+
+// When user clicks on the chat room name to get back to main chat
+roomNameDisplay.addEventListener('click', (e) => {
+  activateChat('room');
+})
