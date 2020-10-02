@@ -4,6 +4,7 @@
   "description": "Realtime chat app with multiple rooms",
   "main": "index.js",
   "scripts": {
+    "test": "jest --verbose --watch-All",
     "script": "node server",
     "dev": "nodemon server"
   },
@@ -12,6 +13,11 @@
   "dependencies": {
     "express": "^4.17.1",
     "moment": "^2.27.0",
-    "socket.io": "^2.3.0"
+    "socket.io": "^2.3.0",
+    "winston": "^2.4.4"
+  },
+  "devDependencies": {
+    "jest": "^26.4.2",
+    "socket.io-client": "^2.3.0"
   }
 }
