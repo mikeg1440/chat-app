@@ -59,6 +59,11 @@ io.on('connection', socket => {
       }
     });
 
+    socket.on('publicMessage', ({username, msg}) => {
+      const user = getCurrentUser(socket.id);
+      io.to(user.room).emit('publicMessage', formatMessage(user.username, msg));
+    })
+
   });
 });
 
