@@ -19,6 +19,7 @@ const { username, room } = Qs.parse(location.search, { ignoreQueryPrefix: true }
 socket.on('message', handleMessage);
 socket.on('roomUsers', handleRoomUsers);
 socket.on('privateMessage', handlePrivateMessage);
+socket.on('publicMessage', handlePublicMessage);
 
 // Join chatroom
 socket.emit('joinRoom', {username, room});
@@ -54,10 +55,9 @@ chatForm.addEventListener('submit', (e) => {
 
 function sendMessage(msg){
   const chatbox = document.querySelector('.chat-messages.active');
-
   // check if the active chat is private
   if (chatbox.getAttribute('id').match(/room/)){
-    socket.emit('chatMessage', msg);
+    socket.emit('publicMessage', {username, msg});
   }else {
     let username = chatbox.getAttribute('id').match(/([\w]+)-chatBox/)[1]
     socket.emit('privateMessage', {username, msg});
@@ -71,7 +71,7 @@ userListDisplay.addEventListener('click', (e) => {
 
   // filter out non-alpha chars
   username = username.match(/[^0-9]+/)[0];
-  debugger
+
   toggleUserHighlight(e.target);
 
   removeNotification(username);
@@ -82,4 +82,14 @@ userListDisplay.addEventListener('click', (e) => {
 // When user clicks on the chat room name to get back to main chat
 roomNameDisplay.addEventListener('click', (e) => {
   activateChat('room');
+  const currentlySelectedUser = document.querySelector('.user-btn.active-user-chat');
+  currentlySelectedUser.classList.remove('active-user-chat');
 })
+
+function handlePublicMessage(msg){
+  const chatBox = document.querySelector('#room-chatBox');
+
+  if (chatBox){
+    addPrivateMessage(chatBox, msg);
+  }
+}
