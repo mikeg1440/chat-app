@@ -67,7 +67,6 @@ export function handlePrivateMessage({msg}){
   // add notification if chat is not active
   if (!chatroom.chat.classList.contains('active')){
     chatroom.unread += 1;
-    debugger
 
     addNotification(msg.username, chatroom.unread);
   }
@@ -94,7 +93,7 @@ export function activateChat(username){
   const currentChat = document.querySelector('.chat-messages.active');
   let newChat;
   newChat = document.querySelector(`#${username}-chatBox`);
-  debugger
+
   if (newChat){
     newChat.classList.remove('in-active');
   }else {
